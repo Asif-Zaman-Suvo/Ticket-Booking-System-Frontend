@@ -43,7 +43,7 @@ export default function HeroSection() {
 
         {/* Search Form */}
         <div className="max-w-5xl mx-auto animate-scale-in">
-          <div className="glass-effect rounded-2xl shadow-strong p-6 sm:p-8 md:p-10">
+          <div className="glass-effect rounded-2xl p-10 shadow-strong sm:p-8 md:p-10 lg:p-12">
             <form onSubmit={handleSearch} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {/* From */}
