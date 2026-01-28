@@ -1,9 +1,9 @@
-import Navbar from './components/Navbar';
-import HeroSection from './components/HeroSection';
-import FeaturedRoutes from './components/FeaturedRoutes';
-import Benefits from './components/Benefits';
-import Testimonials from './components/Testimonials';
-import Footer from './components/Footer';
+import Navbar from './components/LandingPage/Navbar';
+import HeroSection from './components/LandingPage/HeroSection';
+import FeaturedRoutes from './components/LandingPage/FeaturedRoutes';
+import Benefits from './components/LandingPage/Benefits';
+import Testimonials from './components/LandingPage/Testimonials';
+import Footer from './components/LandingPage/Footer';
 
 export default function Home() {
   return (
