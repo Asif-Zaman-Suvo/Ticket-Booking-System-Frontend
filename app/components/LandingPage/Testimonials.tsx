@@ -53,7 +53,7 @@ export default function Testimonials() {
             What Our Customers Say
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Don't just take our word for it - hear from our satisfied travelers
+            Do not just take our word for it - hear from our satisfied travelers
           </p>
         </div>
 
