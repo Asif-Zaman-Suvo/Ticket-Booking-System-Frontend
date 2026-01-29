@@ -1,7 +1,9 @@
 "use client";
 
+import allDistrictApi from "@/services/api";
+import { ApiResponse, District } from "@/types/api.types";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function HeroSection() {
   const [searchData, setSearchData] = useState({
@@ -9,12 +11,37 @@ export default function HeroSection() {
     to: "",
     date: "",
   });
+  const [from, setFrom] = useState<string>("");
+  const [to, setTo] = useState<string>("");
+  const [date, setDate] = useState<string>("");
+  const [districts, setDistricts] = useState<District[]>([]);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Search data:", searchData);
-    // Handle search logic here
   };
+
+  const getDistricts = async () => {
+    try {
+      const res = await allDistrictApi<ApiResponse<District[]>>({
+        endpoint: "https://bdapis.vercel.app/geo/v2.0/districts",
+      });
+
+      setDistricts(res.data);
+    } catch (error) {
+      console.error("Error fetching districts:", error);
+    }
+  };
+
+  useEffect(() => {
+    const fetchDistricts = async () => {
+      await getDistricts();
+    };
+    fetchDistricts();
+  }, []);
+
+
+      // console.log("see Districts data:", districts);
 
   return (
     <section
@@ -79,15 +106,20 @@ export default function HeroSection() {
 
                   <select
                     id="from"
+                    value={from}
+                    onChange={(e) => setFrom(e.target.value)}
                     className="w-full px-4 py-4 rounded-xl border-2 border-gray-100 focus:border-[var(--primary-500)] focus:ring-4 focus:ring-[var(--primary-100)] outline-none transition-all duration-300 text-gray-800 bg-white"
                   >
-                    <option selected>Departure</option>
-                    <option value="US">United States</option>
-                    <option value="CA">Canada</option>
-                    <option value="FR">France</option>
-                    <option value="DE">Germany</option>
+                    
+                    
+                    <option value="">Select Departure</option>
+
+                    {districts.sort((a, b) => a.name.localeCompare(b.name)).map((district) => (
+                      <option key={district.id} value={district.name}>
+                        {district.name}
+                      </option>
+                    ))}
                   </select>
-                
                 </div>
 
                 {/* To */}
@@ -118,14 +150,21 @@ export default function HeroSection() {
                     To
                   </label>
                   <select
+                  
                     id="to"
-                    className="w-full px-4 py-4 rounded-xl border-2 border-gray-100 focus:border-[var(--primary-500)] focus:ring-4 focus:ring-[var(--primary-100)] outline-none transition-all duration-300 text-gray-800 bg-white"
+                    value={to}
+                    onChange={(e) => setTo(e.target.value)}
+                    className="block w-full px-4 py-4 rounded-xl border-2 border-gray-100 focus:border-[var(--primary-500)] focus:ring-4 focus:ring-[var(--primary-100)] outline-none transition-all duration-300 text-gray-800 bg-white"
                   >
-                    <option selected>Destination</option>
-                    <option value="US">United States</option>
-                    <option value="CA">Canada</option>
-                    <option value="FR">France</option>
-                    <option value="DE">Germany</option>
+                   
+
+                    <option value="">Select Destination</option>
+
+                    {districts.sort((a, b) => a.name.localeCompare(b.name)).map((district) => (
+                      <option key={district.id} value={district.name}>
+                        {district.name}
+                      </option>
+                    ))}
                   </select>
                 </div>
 
