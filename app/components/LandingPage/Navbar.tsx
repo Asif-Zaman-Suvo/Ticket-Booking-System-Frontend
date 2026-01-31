@@ -60,7 +60,7 @@ export default function Navbar() {
             <button onClick={() => router.push('/login')} className="btn btn-outline px-6 py-2.5">
               Login
             </button>
-            <button className="btn btn-primary px-6 py-2.5">
+            <button onClick={() => router.push('/register')} className="btn btn-primary px-6 py-2.5">
               Register
             </button>
           </div>
@@ -128,7 +128,7 @@ export default function Navbar() {
               <button onClick={() => router.push('/login')} className="btn btn-outline w-full">
                 Login
               </button>
-              <button className="btn btn-primary w-full">
+              <button onClick={() => router.push('/register')} className="btn btn-primary w-full">
                 Register
               </button>
             </div>
