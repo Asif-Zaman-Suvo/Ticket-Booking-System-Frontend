@@ -16,17 +16,6 @@ const Login = () => {
               <div className="absolute inset-0 bg-gradient-to-r from-[var(--primary-900)]/90 via-[var(--primary-800)]/80 to-[var(--primary-700)]/70"></div>
             </div>
       <div className="w-full max-w-md bg-white/90 backdrop-blur-md rounded-2xl shadow-2xl p-8">
-        {/* Logo */}
-        <div className="flex justify-center mb-6">
-          <Image
-            src="/busgo.png"
-            alt="BusGo Logo"
-            width={200}
-            height={80}
-            priority
-          />
-        </div>
-
         <h2 className="text-2xl font-bold text-center text-gray-800 mb-1">
           Welcome Back
         </h2>

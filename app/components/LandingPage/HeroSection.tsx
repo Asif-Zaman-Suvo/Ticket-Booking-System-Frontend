@@ -13,7 +13,6 @@ export default function HeroSection() {
   });
   const [from, setFrom] = useState<string>("");
   const [to, setTo] = useState<string>("");
-  const [date, setDate] = useState<string>("");
   const [districts, setDistricts] = useState<District[]>([]);
 
   const handleSearch = (e: React.FormEvent) => {
@@ -39,9 +38,6 @@ export default function HeroSection() {
     };
     fetchDistricts();
   }, []);
-
-
-      // console.log("see Districts data:", districts);
 
   return (
     <section
