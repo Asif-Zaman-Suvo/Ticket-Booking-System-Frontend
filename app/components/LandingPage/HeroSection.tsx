@@ -4,6 +4,7 @@ import allDistrictApi from "@/services/api";
 import { ApiResponse, District } from "@/types/api.types";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function HeroSection() {
   const [searchData, setSearchData] = useState({
@@ -14,10 +15,20 @@ export default function HeroSection() {
   const [from, setFrom] = useState<string>("");
   const [to, setTo] = useState<string>("");
   const [districts, setDistricts] = useState<District[]>([]);
+  const router = useRouter();
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Search data:", searchData);
+    if (!from || !to || !searchData.date) {
+        alert("Please select departure, destination and date");
+        return;
+    }
+    const params = new URLSearchParams({
+        from,
+        to,
+        date: searchData.date
+    });
+    router.push(`/search?${params.toString()}`);
   };
 
   const getDistricts = async () => {
