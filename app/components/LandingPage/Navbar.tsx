@@ -4,10 +4,13 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 // import { useRouter } from 'next/router';
 import { useState } from 'react';
+import { useSession, signOut } from '@/app/auth-client';
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const router = useRouter();
+  const { data: session } = useSession();
+  console.log(session);
 
   return (
     <nav className="glass-effect fixed top-0 left-0 right-0 z-50 shadow-soft">
@@ -57,12 +60,26 @@ export default function Navbar() {
 
           {/* Desktop Auth Buttons */}
           <div className="hidden md:flex items-center gap-4">
-            <button onClick={() => router.push('/login')} className="btn btn-outline px-6 py-2.5">
-              Login
-            </button>
-            <button onClick={() => router.push('/register')} className="btn btn-primary px-6 py-2.5">
-              Register
-            </button>
+            {session ? (
+              <button 
+                onClick={async () => {
+                  await signOut();
+                  router.push('/login');
+                }} 
+                className="btn btn-primary px-6 py-2.5"
+              >
+                Logout, {session.user?.name?.split(' ')[0] || 'User'}
+              </button>
+            ) : (
+              <>
+                <button onClick={() => router.push('/login')} className="btn btn-outline px-6 py-2.5">
+                  Login
+                </button>
+                <button onClick={() => router.push('/register')} className="btn btn-primary px-6 py-2.5">
+                  Register
+                </button>
+              </>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -125,12 +142,27 @@ export default function Navbar() {
               Contact
             </a>
             <div className="pt-4 space-y-3">
-              <button onClick={() => router.push('/login')} className="btn btn-outline w-full">
-                Login
-              </button>
-              <button onClick={() => router.push('/register')} className="btn btn-primary w-full">
-                Register
-              </button>
+              {session ? (
+                <button 
+                  onClick={async () => {
+                    await signOut();
+                    setIsMobileMenuOpen(false);
+                    router.push('/login');
+                  }} 
+                  className="btn btn-primary w-full"
+                >
+                  Logout, {session.user?.name?.split(' ')[0] || 'User'}
+                </button>
+              ) : (
+                <>
+                  <button onClick={() => { setIsMobileMenuOpen(false); router.push('/login'); }} className="btn btn-outline w-full">
+                    Login
+                  </button>
+                  <button onClick={() => { setIsMobileMenuOpen(false); router.push('/register'); }} className="btn btn-primary w-full">
+                    Register
+                  </button>
+                </>
+              )}
             </div>
           </div>
         </div>
