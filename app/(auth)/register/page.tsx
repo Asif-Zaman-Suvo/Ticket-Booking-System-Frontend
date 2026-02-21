@@ -1,8 +1,71 @@
+"use client";
+
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
+import { signUp, signIn } from "@/app/auth-client";
+import { useRouter } from "next/navigation";
 
 const Register = () => {
+  const router = useRouter();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleRegister = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+
+    if (password !== confirmPassword) {
+      setError("Passwords do not match.");
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const { data, error } = await signUp.email({
+        email,
+        password,
+        name,
+        // phoneNumber could be passed here if the better-auth instance accepts custom fields via plugins.
+        // For standard better-auth, it will be ignored unless explicitly handled.
+      });
+
+      if (error) {
+        setError(error.message || "Failed to register. Please try again.");
+      } else {
+        router.push("/login?registered=true");
+      }
+    } catch (err) {
+      setError("An unexpected error occurred. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleGoogleLogin = async () => {
+    setLoading(true);
+    setError("");
+    try {
+      const { data, error } = await signIn.social({
+        provider: "google",
+      });
+
+      if (error) {
+        setError(error.message || "Failed to register with Google.");
+        setLoading(false);
+      }
+    } catch (err) {
+      setError("An unexpected error occurred. Please try again.");
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center px-4">
       <div className="absolute inset-0 z-0">
@@ -15,7 +78,7 @@ const Register = () => {
               />
               <div className="absolute inset-0 bg-gradient-to-r from-[var(--primary-900)]/90 via-[var(--primary-800)]/80 to-[var(--primary-700)]/70"></div>
             </div>
-      <div className="w-full max-w-md bg-white/90 backdrop-blur-md rounded-2xl shadow-2xl p-8 my-5">
+      <div className="w-full max-w-md bg-white/90 backdrop-blur-md rounded-2xl shadow-2xl p-8 my-5 z-10">
         <h2 className="text-2xl font-bold text-center text-gray-800 mb-1">
           Create Your Account
         </h2>
@@ -23,7 +86,13 @@ const Register = () => {
           Start booking your journey today 🎫
         </p>
 
-        <form className="space-y-4">
+        {error && (
+          <div className="bg-red-50 text-red-600 text-sm p-3 rounded-lg mb-4 text-center">
+            {error}
+          </div>
+        )}
+
+        <form className="space-y-4" onSubmit={handleRegister}>
           {/* Full Name */}
           <div>
             <label className="block text-sm font-medium text-gray-600 mb-1">
@@ -31,7 +100,10 @@ const Register = () => {
             </label>
             <input
               type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
               placeholder="Enter your full name"
+              required
               className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-[#1D4ED8] outline-none"
             />
           </div>
@@ -43,7 +115,10 @@ const Register = () => {
             </label>
             <input
               type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
+              required
               className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-[#1D4ED8] outline-none"
             />
           </div>
@@ -55,6 +130,8 @@ const Register = () => {
             </label>
             <input
               type="tel"
+              value={phoneNumber}
+              onChange={(e) => setPhoneNumber(e.target.value)}
               placeholder="e.g. 01XXXXXXXXX"
               className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-[#1D4ED8] outline-none"
             />
@@ -67,7 +144,11 @@ const Register = () => {
             </label>
             <input
               type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               placeholder="Create a password"
+              required
+              minLength={8}
               className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-[#1D4ED8] outline-none"
             />
           </div>
@@ -79,13 +160,21 @@ const Register = () => {
             </label>
             <input
               type="password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
               placeholder="Confirm your password"
+              required
+              minLength={8}
               className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-[#1D4ED8] outline-none"
             />
           </div>
 
-          <button className="w-full bg-[#1D4ED8] text-white py-3 rounded-xl font-semibold hover:bg-blue-700 transition">
-            Create Account
+          <button 
+            type="submit" 
+            disabled={loading}
+            className="w-full bg-[#1D4ED8] text-white py-3 rounded-xl font-semibold hover:bg-blue-700 transition disabled:opacity-70 disabled:cursor-not-allowed flex justify-center items-center"
+          >
+            {loading ? "Creating Account..." : "Create Account"}
           </button>
         </form>
 
