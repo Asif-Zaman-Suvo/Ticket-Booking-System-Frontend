@@ -68,7 +68,7 @@ export default function Navbar() {
                 }} 
                 className="btn btn-primary px-6 py-2.5"
               >
-                Logout, {session.user?.name?.split(' ')[0] || 'User'}
+                Logout, {session.user?.name || 'User'}
               </button>
             ) : (
               <>
