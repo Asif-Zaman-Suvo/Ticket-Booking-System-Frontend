@@ -3,14 +3,13 @@
 import Link from "next/link";
 import React, { useState } from "react";
 import Image from "next/image";
-import { signUp, signIn } from "@/app/auth-client";
+import { signUp } from "@/app/auth-client";
 import { useRouter } from "next/navigation";
 
 const Register = () => {
   const router = useRouter();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -28,12 +27,10 @@ const Register = () => {
     }
 
     try {
-      const { data, error } = await signUp.email({
+      const { error } = await signUp.email({
         email,
         password,
         name,
-        // phoneNumber could be passed here if the better-auth instance accepts custom fields via plugins.
-        // For standard better-auth, it will be ignored unless explicitly handled.
       });
 
       if (error) {
@@ -44,24 +41,6 @@ const Register = () => {
     } catch (err) {
       setError("An unexpected error occurred. Please try again.");
     } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleGoogleLogin = async () => {
-    setLoading(true);
-    setError("");
-    try {
-      const { data, error } = await signIn.social({
-        provider: "google",
-      });
-
-      if (error) {
-        setError(error.message || "Failed to register with Google.");
-        setLoading(false);
-      }
-    } catch (err) {
-      setError("An unexpected error occurred. Please try again.");
       setLoading(false);
     }
   };
@@ -119,20 +98,6 @@ const Register = () => {
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
               required
-              className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-[#1D4ED8] outline-none"
-            />
-          </div>
-
-          {/* Phone Number */}
-          <div>
-            <label className="block text-sm font-medium text-gray-600 mb-1">
-              Phone Number
-            </label>
-            <input
-              type="tel"
-              value={phoneNumber}
-              onChange={(e) => setPhoneNumber(e.target.value)}
-              placeholder="e.g. 01XXXXXXXXX"
               className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-[#1D4ED8] outline-none"
             />
           </div>
