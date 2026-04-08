@@ -6,8 +6,9 @@ import { TicketPreview } from "@/app/components/Booking/TicketPreview";
 import { BookingData } from "@/types/booking.types";
 import { useBookingStore } from "@/store/bookingStore";
 import { useUIStore } from "@/store/uiStore";
-import { CheckCircle, Download, Share2, Home, Ticket, Sparkles, Shield, Clock, Info, QrCode } from "lucide-react";
+import { CheckCircle, Download, Share2, Home, Ticket, Sparkles, Shield, Clock, Info, QrCode, Loader2 } from "lucide-react";
 import { Button, Card, CardBody } from "@/app/components/UI";
+import { generateSimpleTicketPDF } from "@/utils/pdfGenerator";
 
 
 export default function BookingConfirmationPage() {
@@ -21,6 +22,7 @@ export default function BookingConfirmationPage() {
   const [booking, setBooking] = useState<BookingData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [showConfetti, setShowConfetti] = useState(false);
+  const [isDownloading, setIsDownloading] = useState(false);
 
   useEffect(() => {
     // Simulate API call to create booking
@@ -56,12 +58,25 @@ export default function BookingConfirmationPage() {
     return () => clearTimeout(timer);
   }, [busId, selectedBus, selectedSeats, passengers, contactInfo, emergencyContact, searchParams, setCurrentBooking, addBookingToHistory]);
 
-  const handleDownloadTicket = () => {
-    // Simulate ticket download
-    addToast({
-      type: 'success',
-      message: 'Ticket downloaded successfully!',
-    });
+  const handleDownloadTicket = async () => {
+    if (!booking) return;
+    
+    setIsDownloading(true);
+    try {
+      generateSimpleTicketPDF(booking);
+      addToast({
+        type: 'success',
+        message: 'Ticket downloaded successfully!',
+      });
+    } catch (error) {
+      console.error('Error downloading ticket:', error);
+      addToast({
+        type: 'error',
+        message: 'Failed to download ticket. Please try again.',
+      });
+    } finally {
+      setIsDownloading(false);
+    }
   };
 
   const handleShareBooking = () => {
@@ -213,10 +228,20 @@ export default function BookingConfirmationPage() {
               <Button
                 variant="secondary"
                 onClick={handleDownloadTicket}
+                disabled={isDownloading}
                 className="flex items-center justify-center gap-2 py-4 text-base font-medium shadow-md hover:shadow-lg transition-all duration-300"
               >
-                <Download className="w-5 h-5" />
-                Download Ticket
+                {isDownloading ? (
+                  <>
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                    Downloading...
+                  </>
+                ) : (
+                  <>
+                    <Download className="w-5 h-5" />
+                    Download Ticket
+                  </>
+                )}
               </Button>
               <Button
                 variant="outline"

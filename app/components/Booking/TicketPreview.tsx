@@ -14,7 +14,7 @@ export const TicketPreview: React.FC<TicketPreviewProps> = ({ booking }) => {
     : '';
 
   return (
-    <div className="bg-white rounded-3xl shadow-2xl border border-gray-100 overflow-hidden relative">
+    <div id="ticket-preview" className="bg-white rounded-3xl shadow-2xl border border-gray-100 overflow-hidden relative">
       {/* Decorative Corner Accents */}
       <div className="absolute top-0 left-0 w-32 h-32 bg-gradient-to-br from-[var(--primary-100)] to-transparent rounded-br-3xl opacity-50" />
       <div className="absolute bottom-0 right-0 w-32 h-32 bg-gradient-to-tl from-[var(--primary-100)] to-transparent rounded-tl-3xl opacity-50" />
