@@ -91,20 +91,24 @@ export default function SeatSelectionPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-12">
+    <div className="min-h-screen bg-gradient-to-br from-[var(--primary-50)] via-white to-[var(--primary-50)] pb-16">
       {/* Header */}
-      <div className="bg-white border-b border-gray-100 sticky top-0 z-10">
+      <div className="bg-white/80 backdrop-blur-md border-b border-gray-100 sticky top-0 z-10 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
             <button
               onClick={handleGoBack}
-              className="flex items-center gap-2 text-gray-600 hover:text-[var(--primary-600)] transition-colors"
+              className="flex items-center gap-2 text-gray-600 hover:text-[var(--primary-600)] transition-colors group"
             >
-              <ArrowLeft className="w-5 h-5" />
+              <div className="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center group-hover:bg-[var(--primary-100)] transition-colors">
+                <ArrowLeft className="w-4 h-4" />
+              </div>
               <span className="font-medium">Back to Search</span>
             </button>
             <div className="flex items-center gap-2">
-              <Armchair className="w-5 h-5 text-[var(--primary-600)]" />
+              <div className="w-10 h-10 bg-gradient-to-br from-[var(--primary-500)] to-[var(--primary-700)] rounded-xl flex items-center justify-center shadow-md shadow-[var(--primary-500)]/30">
+                <Armchair className="w-5 h-5 text-white" />
+              </div>
               <h1 className="text-lg font-bold text-gray-900">Select Seats</h1>
             </div>
             <div className="w-24" /> {/* Spacer for centering */}
@@ -117,15 +121,37 @@ export default function SeatSelectionPage() {
         {/* Seat Layout */}
         <div className="flex-1">
           {selectedBus && (
-            <div className="mb-6">
-              <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-                <h2 className="text-xl font-bold text-gray-900 mb-2">{selectedBus.operator}</h2>
-                <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600">
-                  <span>{selectedBus.type}</span>
-                  <span>•</span>
-                  <span>{selectedBus.departureTime} - {selectedBus.arrivalTime}</span>
-                  <span>•</span>
-                  <span>{selectedBus.duration}</span>
+            <div className="mb-6 animate-fade-in">
+              <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-6 relative overflow-hidden">
+                {/* Decorative Background */}
+                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-[var(--primary-50)] to-transparent rounded-full -translate-y-1/2 translate-x-1/2 opacity-50" />
+                
+                <div className="relative z-10">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-12 h-12 bg-gradient-to-br from-[var(--primary-500)] to-[var(--primary-700)] rounded-xl flex items-center justify-center shadow-md">
+                      <Armchair className="w-6 h-6 text-white" />
+                    </div>
+                    <div>
+                      <h2 className="text-xl font-bold text-gray-900">{selectedBus.operator}</h2>
+                      <p className="text-sm text-gray-500">{selectedBus.type}</p>
+                    </div>
+                  </div>
+                  <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-sm">
+                    <div className="flex items-center gap-2 bg-[var(--primary-50)] px-3 py-1.5 rounded-full">
+                      <span className="text-gray-500">Departure</span>
+                      <span className="font-semibold text-gray-900">{selectedBus.departureTime}</span>
+                    </div>
+                    <div className="w-4 h-0.5 bg-gray-300" />
+                    <div className="flex items-center gap-2 bg-[var(--primary-50)] px-3 py-1.5 rounded-full">
+                      <span className="text-gray-500">Arrival</span>
+                      <span className="font-semibold text-gray-900">{selectedBus.arrivalTime}</span>
+                    </div>
+                    <div className="w-4 h-0.5 bg-gray-300" />
+                    <div className="flex items-center gap-2 bg-[var(--primary-50)] px-3 py-1.5 rounded-full">
+                      <span className="text-gray-500">Duration</span>
+                      <span className="font-semibold text-gray-900">{selectedBus.duration}</span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

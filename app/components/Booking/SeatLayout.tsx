@@ -3,6 +3,7 @@
 import React, { useMemo } from 'react';
 import { Seat as SeatComponent } from './Seat';
 import { Seat as SeatType } from '@/types/booking.types';
+import { Armchair, User, Circle, CheckCircle2 } from 'lucide-react';
 
 interface SeatLayoutProps {
   seats: SeatType[];
@@ -30,27 +31,54 @@ export const SeatLayout: React.FC<SeatLayoutProps> = ({
   const sortedRows = Object.keys(seatsByRow).map(Number).sort((a, b) => a - b);
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-      {/* Bus Front */}
-      <div className="mb-6">
-        <div className="w-3/4 mx-auto h-8 bg-gradient-to-b from-gray-100 to-gray-50 rounded-t-3xl border-2 border-gray-200 border-b-0" />
+    <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-6 sm:p-8 overflow-hidden relative">
+      {/* Decorative Background Pattern */}
+      <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-[var(--primary-50)] to-transparent rounded-full -translate-y-1/2 translate-x-1/2 opacity-50" />
+      <div className="absolute bottom-0 left-0 w-48 h-48 bg-gradient-to-tr from-[var(--primary-50)] to-transparent rounded-full translate-y-1/2 -translate-x-1/2 opacity-50" />
+
+      {/* Bus Front Design */}
+      <div className="mb-8 relative">
+        <div className="w-full max-w-md mx-auto">
+          {/* Windshield */}
+          <div className="relative">
+            <div className="h-12 bg-gradient-to-b from-gray-100 to-gray-50 rounded-t-3xl border-2 border-gray-200 border-b-0 relative overflow-hidden">
+              {/* Windshield Reflection */}
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent transform -skew-x-12" />
+            </div>
+            {/* Bus Front Body */}
+            <div className="h-4 bg-gradient-to-b from-gray-200 to-gray-300 border-x-2 border-gray-300" />
+          </div>
+          
+          {/* Headlights */}
+          <div className="flex justify-between px-8 -mt-2">
+            <div className="w-6 h-3 bg-gradient-to-r from-yellow-300 to-yellow-400 rounded-full shadow-lg shadow-yellow-400/30" />
+            <div className="w-6 h-3 bg-gradient-to-r from-yellow-300 to-yellow-400 rounded-full shadow-lg shadow-yellow-400/30" />
+          </div>
+        </div>
       </div>
 
       {/* Driver Seat */}
-      <div className="flex justify-center mb-6">
-        <div className="flex items-center gap-2">
-          <div className="w-10 h-10 bg-gray-100 rounded-lg border-2 border-gray-200 flex items-center justify-center">
-            <span className="text-xs text-gray-500 font-medium">Driver</span>
+      <div className="flex justify-center mb-8">
+        <div className="relative">
+          <div className="w-14 h-14 bg-gradient-to-br from-gray-100 to-gray-200 rounded-xl border-2 border-gray-300 flex items-center justify-center shadow-sm">
+            <Armchair className="w-6 h-6 text-gray-500" />
+          </div>
+          <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-gray-600 text-white text-[10px] px-2 py-0.5 rounded-full font-medium whitespace-nowrap">
+            Driver
           </div>
         </div>
       </div>
 
       {/* Seats */}
-      <div className="space-y-3">
-        {sortedRows.map((row) => (
-          <div key={row} className="flex items-center justify-center gap-4">
+      <div className="space-y-4 relative z-10">
+        {sortedRows.map((row, index) => (
+          <div
+            key={row}
+            className="flex items-center justify-center gap-4 sm:gap-6 animate-fade-in"
+            style={{ animationDelay: `${index * 0.05}s` }}
+          >
             {/* Left Side */}
-            <div className="flex gap-2">
+            <div className="flex gap-2 sm:gap-3">
               {seatsByRow[row]
                 .filter((seat) => seat.column <= 2)
                 .sort((a, b) => a.column - b.column)
@@ -69,10 +97,12 @@ export const SeatLayout: React.FC<SeatLayoutProps> = ({
             </div>
 
             {/* Aisle */}
-            <div className="w-8 sm:w-12 flex-shrink-0" />
+            <div className="w-10 sm:w-14 flex-shrink-0 flex items-center justify-center">
+              <div className="w-1 h-8 bg-gradient-to-b from-transparent via-gray-200 to-transparent rounded-full" />
+            </div>
 
             {/* Right Side */}
-            <div className="flex gap-2">
+            <div className="flex gap-2 sm:gap-3">
               {seatsByRow[row]
                 .filter((seat) => seat.column > 2)
                 .sort((a, b) => a.column - b.column)
@@ -91,34 +121,64 @@ export const SeatLayout: React.FC<SeatLayoutProps> = ({
             </div>
 
             {/* Row Number */}
-            <div className="w-8 text-center text-sm text-gray-400 font-medium">
-              {row}
+            <div className="w-10 text-center">
+              <div className="inline-flex items-center justify-center w-7 h-7 bg-gray-100 rounded-lg text-sm text-gray-500 font-bold">
+                {row}
+              </div>
             </div>
           </div>
         ))}
       </div>
 
       {/* Legend */}
-      <div className="mt-8 pt-6 border-t border-gray-100">
+      <div className="mt-10 pt-8 border-t border-gray-100 relative z-10">
         <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-white border-2 border-gray-300 rounded-lg" />
-            <span className="text-sm text-gray-600">Available</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-[var(--primary-600)] border-2 border-[var(--primary-600)] rounded-lg" />
-            <span className="text-sm text-gray-600">Selected</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-gray-100 border-2 border-gray-200 rounded-lg opacity-50" />
-            <span className="text-sm text-gray-600">Booked</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-pink-50 border-2 border-pink-200 rounded-lg" />
-            <span className="text-sm text-gray-600">Female Only</span>
-          </div>
+          <LegendItem
+            icon={<Circle className="w-3 h-3" />}
+            label="Available"
+            color="bg-white border-gray-300"
+            textColor="text-gray-600"
+          />
+          <LegendItem
+            icon={<CheckCircle2 className="w-3 h-3" />}
+            label="Selected"
+            color="bg-[var(--primary-600)] border-[var(--primary-600)]"
+            textColor="text-[var(--primary-600)]"
+          />
+          <LegendItem
+            icon={<Circle className="w-3 h-3" />}
+            label="Booked"
+            color="bg-gray-100 border-gray-200 opacity-60"
+            textColor="text-gray-500"
+          />
+          <LegendItem
+            icon={<User className="w-3 h-3" />}
+            label="Female Only"
+            color="bg-pink-50 border-pink-200"
+            textColor="text-pink-600"
+          />
         </div>
       </div>
     </div>
   );
 };
+
+// Legend Item Component
+const LegendItem = ({
+  icon,
+  label,
+  color,
+  textColor
+}: {
+  icon: React.ReactNode;
+  label: string;
+  color: string;
+  textColor: string;
+}) => (
+  <div className="flex items-center gap-2 group">
+    <div className={`w-9 h-9 rounded-xl border-2 flex items-center justify-center shadow-sm ${color} group-hover:scale-110 transition-transform duration-200`}>
+      <span className={textColor}>{icon}</span>
+    </div>
+    <span className={`text-sm font-medium ${textColor}`}>{label}</span>
+  </div>
+);
