@@ -7,32 +7,36 @@ export default function Testimonials() {
 
   const testimonials = [
     {
-      name: 'Sarah Johnson',
+      name: 'Fatima Rahman',
       role: 'Business Traveler',
       image: '👩‍💼',
       rating: 5,
       text: "BusGo has made my weekly commute so much easier! The booking process is seamless, and the buses are always on time. Highly recommended!",
+      gradient: 'from-blue-500 to-indigo-600',
     },
     {
-      name: 'Michael Chen',
+      name: 'Ahmed Hossain',
       role: 'Student',
       image: '👨‍🎓',
       rating: 5,
       text: 'As a student, I appreciate the affordable prices and student discounts. The comfort level is amazing for long journeys. Best bus service ever!',
+      gradient: 'from-emerald-500 to-teal-600',
     },
     {
-      name: 'Emily Rodriguez',
+      name: 'Nadia Islam',
       role: 'Tourist',
       image: '👩‍🦰',
       rating: 5,
       text: 'Explored the entire country using BusGo! The customer service is exceptional, and the buses are clean and comfortable. Will definitely use again!',
+      gradient: 'from-purple-500 to-pink-600',
     },
     {
-      name: 'David Thompson',
+      name: 'Rafiq Ahmed',
       role: 'Regular Commuter',
       image: '👨‍💻',
       rating: 5,
       text: 'Been using BusGo for over 2 years now. Never had a single issue. The app is user-friendly and the loyalty rewards are fantastic!',
+      gradient: 'from-amber-500 to-orange-600',
     },
   ];
 
@@ -45,20 +49,27 @@ export default function Testimonials() {
   };
 
   return (
-    <section className="py-28 bg-gradient-to-br from-[var(--primary-50)] to-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16 animate-fade-in">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            What Our Customers Say
+    <section className="py-28 bg-gradient-to-br from-[var(--primary-50)] via-white to-[var(--accent-50)] relative overflow-hidden">
+      {/* Background Decorations */}
+      <div className="absolute top-0 left-1/4 w-96 h-96 bg-[var(--primary-200)]/20 rounded-full blur-3xl"></div>
+      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-[var(--accent-200)]/20 rounded-full blur-3xl"></div>
+      
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 slide-up">
+            What Our <span className="gradient-text-animated">Customers</span> Say
           </h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto slide-up" style={{ animationDelay: '0.2s' }}>
             Do not just take our word for it - hear from our satisfied travelers
           </p>
         </div>
 
         {/* Testimonial Carousel */}
         <div className="max-w-4xl mx-auto">
-          <div className="bg-white rounded-2xl shadow-strong p-8 md:p-12 relative">
+          <div className="bg-white rounded-3xl shadow-strong p-8 md:p-12 relative overflow-hidden border border-gray-100">
+            {/* Gradient Background */}
+            <div className={`absolute inset-0 bg-gradient-to-br ${testimonials[activeIndex].gradient} opacity-5 transition-opacity duration-500`}></div>
+            
             {/* Quote Icon */}
             <div className="absolute top-8 left-8 text-[var(--primary-200)] opacity-50">
               <svg className="w-16 h-16" fill="currentColor" viewBox="0 0 24 24">
@@ -70,7 +81,7 @@ export default function Testimonials() {
             <div className="relative z-10 pt-8">
               {/* Avatar */}
               <div className="flex flex-col items-center mb-6">
-                <div className="w-20 h-20 rounded-full bg-gradient-to-br from-[var(--primary-400)] to-[var(--primary-600)] flex items-center justify-center text-4xl mb-4 shadow-medium">
+                <div className={`w-24 h-24 rounded-full bg-gradient-to-br ${testimonials[activeIndex].gradient} flex items-center justify-center text-5xl mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
                   {testimonials[activeIndex].image}
                 </div>
                 <h3 className="text-2xl font-bold text-gray-900">
@@ -99,62 +110,60 @@ export default function Testimonials() {
               </p>
             </div>
 
-            {/* Navigation Arrows */}
-            <button
-              onClick={prevTestimonial}
-              className="absolute left-4 top-1/2 transform -translate-y-1/2 w-12 h-12 rounded-full bg-white shadow-medium hover:shadow-strong flex items-center justify-center text-[var(--primary-600)] hover:bg-[var(--primary-50)] transition-all duration-300"
-              aria-label="Previous testimonial"
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-            </button>
-            <button
-              onClick={nextTestimonial}
-              className="absolute right-4 top-1/2 transform -translate-y-1/2 w-12 h-12 rounded-full bg-white shadow-medium hover:shadow-strong flex items-center justify-center text-[var(--primary-600)] hover:bg-[var(--primary-50)] transition-all duration-300"
-              aria-label="Next testimonial"
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
-          </div>
-
-          {/* Dots Indicator */}
-          <div className="flex justify-center mt-8 space-x-2">
-            {testimonials.map((_, index) => (
+            {/* Navigation Buttons */}
+            <div className="flex items-center justify-center gap-4 mt-8">
               <button
-                key={index}
-                onClick={() => setActiveIndex(index)}
-                className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                  index === activeIndex
-                    ? 'bg-[var(--primary-600)] w-8'
-                    : 'bg-gray-300 hover:bg-gray-400'
-                }`}
-                aria-label={`Go to testimonial ${index + 1}`}
-              />
-            ))}
+                onClick={prevTestimonial}
+                className="w-12 h-12 rounded-full bg-gradient-to-r from-[var(--primary-500)] to-[var(--primary-600)] text-white flex items-center justify-center hover:shadow-lg hover:shadow-[var(--primary-400)]/50 transition-all duration-300 hover:scale-110"
+                aria-label="Previous testimonial"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+              
+              {/* Dots */}
+              <div className="flex items-center gap-2">
+                {testimonials.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setActiveIndex(index)}
+                    className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                      index === activeIndex
+                        ? 'w-8 bg-gradient-to-r from-[var(--primary-500)] to-[var(--accent-500)]'
+                        : 'bg-gray-300 hover:bg-gray-400'
+                    }`}
+                    aria-label={`Go to testimonial ${index + 1}`}
+                  />
+                ))}
+              </div>
+              
+              <button
+                onClick={nextTestimonial}
+                className="w-12 h-12 rounded-full bg-gradient-to-r from-[var(--primary-500)] to-[var(--primary-600)] text-white flex items-center justify-center hover:shadow-lg hover:shadow-[var(--primary-400)]/50 transition-all duration-300 hover:scale-110"
+                aria-label="Next testimonial"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+            </div>
           </div>
         </div>
 
         {/* Trust Badges */}
-        <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
-          <div className="text-center">
-            <div className="text-3xl mb-2">🏆</div>
-            <p className="text-sm font-semibold text-gray-700">Award Winning</p>
-          </div>
-          <div className="text-center">
-            <div className="text-3xl mb-2">✅</div>
-            <p className="text-sm font-semibold text-gray-700">Verified Reviews</p>
-          </div>
-          <div className="text-center">
-            <div className="text-3xl mb-2">🔒</div>
-            <p className="text-sm font-semibold text-gray-700">Secure Payments</p>
-          </div>
-          <div className="text-center">
-            <div className="text-3xl mb-2">⭐</div>
-            <p className="text-sm font-semibold text-gray-700">4.9/5 Rating</p>
-          </div>
+        <div className="mt-16 flex flex-wrap items-center justify-center gap-8">
+          {[
+            { icon: '⭐', text: '4.9/5 Rating' },
+            { icon: '👥', text: '1M+ Users' },
+            { icon: '🏆', text: 'Best Service 2024' },
+            { icon: '🔒', text: 'Secure Booking' },
+          ].map((badge, index) => (
+            <div key={index} className="flex items-center gap-2 px-6 py-3 bg-white rounded-full shadow-soft hover:shadow-medium transition-all duration-300 hover:-translate-y-1">
+              <span className="text-2xl">{badge.icon}</span>
+              <span className="font-semibold text-gray-700">{badge.text}</span>
+            </div>
+          ))}
         </div>
       </div>
     </section>

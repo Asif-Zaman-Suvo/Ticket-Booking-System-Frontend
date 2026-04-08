@@ -8,6 +8,7 @@ export default function Benefits() {
       ),
       title: 'Safe & Secure',
       description: 'Your safety is our priority. All our buses are regularly maintained and drivers are professionally trained.',
+      gradient: 'from-emerald-500 to-teal-600',
     },
     {
       icon: (
@@ -17,6 +18,7 @@ export default function Benefits() {
       ),
       title: 'Best Prices',
       description: 'Get the most competitive prices in the market with exclusive deals and discounts for regular travelers.',
+      gradient: 'from-amber-500 to-orange-600',
     },
     {
       icon: (
@@ -26,6 +28,7 @@ export default function Benefits() {
       ),
       title: '24/7 Support',
       description: 'Our customer support team is available round the clock to assist you with any queries or concerns.',
+      gradient: 'from-blue-500 to-indigo-600',
     },
     {
       icon: (
@@ -35,6 +38,7 @@ export default function Benefits() {
       ),
       title: 'Quick Booking',
       description: 'Book your tickets in just a few clicks. Simple, fast, and hassle-free booking experience.',
+      gradient: 'from-purple-500 to-pink-600',
     },
     {
       icon: (
@@ -44,6 +48,7 @@ export default function Benefits() {
       ),
       title: 'Easy Refunds',
       description: 'Changed your plans? Get quick and easy refunds with our transparent cancellation policy.',
+      gradient: 'from-rose-500 to-red-600',
     },
     {
       icon: (
@@ -53,18 +58,23 @@ export default function Benefits() {
       ),
       title: 'Premium Comfort',
       description: 'Travel in comfort with spacious seats, AC, entertainment, and complimentary refreshments.',
+      gradient: 'from-cyan-500 to-blue-600',
     },
   ];
 
   return (
-    <section id="about" className="py-32 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="about" className="py-32 bg-gradient-to-br from-white via-gray-50 to-[var(--primary-50)] relative overflow-hidden">
+      {/* Background Decorations */}
+      <div className="absolute top-0 left-0 w-96 h-96 bg-[var(--primary-200)]/30 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
+      <div className="absolute bottom-0 right-0 w-96 h-96 bg-[var(--accent-200)]/30 rounded-full blur-3xl translate-x-1/2 translate-y-1/2"></div>
+      
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
-        <div className="text-center mb-16 animate-fade-in">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-            Why Choose Us
+        <div className="text-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 slide-up">
+            Why Choose <span className="gradient-text-animated">Us</span>
           </h2>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto slide-up" style={{ animationDelay: '0.2s' }}>
             Experience the difference with our exceptional service and commitment to excellence
           </p>
         </div>
@@ -74,40 +84,61 @@ export default function Benefits() {
           {benefits.map((benefit, index) => (
             <div
               key={index}
-              className="group p-8 rounded-xl bg-gradient-to-br from-white to-[var(--gray-50)] shadow-soft hover-lift border border-gray-100"
+              className="group p-8 rounded-2xl bg-white shadow-soft hover:shadow-strong transition-all duration-500 hover:-translate-y-2 border border-gray-100 overflow-hidden relative"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
-              <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[var(--primary-500)] to-[var(--primary-700)] flex items-center justify-center text-white mb-6 group-hover:scale-110 transition-transform duration-300">
+              {/* Gradient Overlay on Hover */}
+              <div className={`absolute inset-0 bg-gradient-to-br ${benefit.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`}></div>
+              
+              {/* Icon */}
+              <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${benefit.gradient} flex items-center justify-center text-white mb-6 group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 shadow-lg`}>
                 {benefit.icon}
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">
+              
+              {/* Content */}
+              <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-[var(--primary-700)] transition-colors duration-300">
                 {benefit.title}
               </h3>
               <p className="text-gray-600 leading-relaxed">
                 {benefit.description}
               </p>
+              
+              {/* Hover Arrow */}
+              <div className={`absolute bottom-6 right-6 w-10 h-10 rounded-full bg-gradient-to-br ${benefit.gradient} flex items-center justify-center text-white opacity-0 group-hover:opacity-100 group-hover:translate-x-0 translate-x-4 transition-all duration-500`}>
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </div>
             </div>
           ))}
         </div>
 
-        {/* Stats Section with proper spacing */}
-        <div className="mt-24 gradient-primary rounded-2xl p-12 text-white relative z-10">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            <div>
-              <p className="text-4xl md:text-5xl font-bold mb-2">500+</p>
-              <p className="text-white/90">Routes Covered</p>
+        {/* Stats Section */}
+        <div className="mt-24 relative">
+          <div className="absolute inset-0 bg-gradient-to-r from-[var(--primary-600)] via-[var(--primary-700)] to-[var(--accent-600)] rounded-2xl blur-xl opacity-50"></div>
+          <div className="relative bg-gradient-to-r from-[var(--primary-600)] via-[var(--primary-700)] to-[var(--accent-600)] rounded-2xl p-12 text-white overflow-hidden">
+            {/* Animated Background Pattern */}
+            <div className="absolute inset-0 opacity-10">
+              <div className="absolute top-0 left-0 w-full h-full" style={{
+                backgroundImage: `radial-gradient(circle at 25% 25%, white 2%, transparent 2%), radial-gradient(circle at 75% 75%, white 2%, transparent 2%)`,
+                backgroundSize: '60px 60px'
+              }}></div>
             </div>
-            <div>
-              <p className="text-4xl md:text-5xl font-bold mb-2">1M+</p>
-              <p className="text-white/90">Happy Travelers</p>
-            </div>
-            <div>
-              <p className="text-4xl md:text-5xl font-bold mb-2">15+</p>
-              <p className="text-white/90">Years Experience</p>
-            </div>
-            <div>
-              <p className="text-4xl md:text-5xl font-bold mb-2">98%</p>
-              <p className="text-white/90">Satisfaction Rate</p>
+            
+            <div className="relative z-10 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+              {[
+                { value: '500+', label: 'Routes Covered' },
+                { value: '1M+', label: 'Happy Customers' },
+                { value: '10K+', label: 'Daily Trips' },
+                { value: '99%', label: 'On-Time Rate' },
+              ].map((stat, index) => (
+                <div key={index} className="group">
+                  <p className="text-4xl md:text-5xl font-bold mb-2 group-hover:scale-110 transition-transform duration-300">
+                    {stat.value}
+                  </p>
+                  <p className="text-white/90">{stat.label}</p>
+                </div>
+              ))}
             </div>
           </div>
         </div>
