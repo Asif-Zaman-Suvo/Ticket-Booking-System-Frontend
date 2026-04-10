@@ -35,28 +35,6 @@ export const SeatLayout: React.FC<SeatLayoutProps> = ({
       {/* Decorative Background Pattern */}
       <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-[var(--primary-50)] to-transparent rounded-full -translate-y-1/2 translate-x-1/2 opacity-50" />
       <div className="absolute bottom-0 left-0 w-48 h-48 bg-gradient-to-tr from-[var(--primary-50)] to-transparent rounded-full translate-y-1/2 -translate-x-1/2 opacity-50" />
-
-      {/* Bus Front Design */}
-      <div className="mb-8 relative">
-        <div className="w-full max-w-md mx-auto">
-          {/* Windshield */}
-          <div className="relative">
-            <div className="h-12 bg-gradient-to-b from-gray-100 to-gray-50 rounded-t-3xl border-2 border-gray-200 border-b-0 relative overflow-hidden">
-              {/* Windshield Reflection */}
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent transform -skew-x-12" />
-            </div>
-            {/* Bus Front Body */}
-            <div className="h-4 bg-gradient-to-b from-gray-200 to-gray-300 border-x-2 border-gray-300" />
-          </div>
-          
-          {/* Headlights */}
-          <div className="flex justify-between px-8 -mt-2">
-            <div className="w-6 h-3 bg-gradient-to-r from-yellow-300 to-yellow-400 rounded-full shadow-lg shadow-yellow-400/30" />
-            <div className="w-6 h-3 bg-gradient-to-r from-yellow-300 to-yellow-400 rounded-full shadow-lg shadow-yellow-400/30" />
-          </div>
-        </div>
-      </div>
-
       {/* Driver Seat */}
       <div className="flex justify-center mb-8">
         <div className="relative">
@@ -71,7 +49,7 @@ export const SeatLayout: React.FC<SeatLayoutProps> = ({
 
       {/* Seats */}
       <div className="space-y-4 relative z-10">
-        {sortedRows.map((row, index) => (
+        {sortedRows?.map((row, index) => (
           <div
             key={row}
             className="flex items-center justify-center gap-4 sm:gap-6 animate-fade-in"
