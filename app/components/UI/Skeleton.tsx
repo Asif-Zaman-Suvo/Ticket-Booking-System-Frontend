@@ -1,4 +1,8 @@
+'use client';
+
 import React from 'react';
+import { Skeleton as ShadcnSkeleton } from '@/components/ui/skeleton';
+import { cn } from '@/lib/utils';
 
 export interface SkeletonProps {
   className?: string;
@@ -22,33 +26,25 @@ export const Skeleton: React.FC<SkeletonProps> = ({
     rounded: 'rounded-xl',
   };
 
-  const animationStyles: Record<string, string> = {
-    pulse: 'animate-pulse',
-    wave: 'animate-wave',
-    none: '',
-  };
-
   const style: React.CSSProperties = {};
   if (width) style.width = typeof width === 'number' ? `${width}px` : width;
   if (height) style.height = typeof height === 'number' ? `${height}px` : height;
 
   return (
-    <div
-      className={`
-        bg-gray-200
-        ${variantStyles[variant]}
-        ${animationStyles[animation]}
-        ${className}
-      `}
+    <ShadcnSkeleton
+      className={cn(
+        variantStyles[variant],
+        animation === 'none' && 'animate-none',
+        className
+      )}
       style={style}
     />
   );
 };
 
 // Predefined skeleton components for common use cases
-
 export const SkeletonCard: React.FC<{ className?: string }> = ({ className = '' }) => (
-  <div className={`bg-white rounded-2xl border border-gray-100 p-6 ${className}`}>
+  <div className={cn('bg-card rounded-2xl border border-border p-6', className)}>
     <div className="flex items-start gap-4">
       <Skeleton variant="circular" width={60} height={60} />
       <div className="flex-1 space-y-3">
@@ -64,7 +60,7 @@ export const SkeletonText: React.FC<{ lines?: number; className?: string }> = ({
   lines = 3,
   className = '',
 }) => (
-  <div className={`space-y-2 ${className}`}>
+  <div className={cn('space-y-2', className)}>
     {Array.from({ length: lines }).map((_, i) => (
       <Skeleton
         key={i}
@@ -94,7 +90,7 @@ export const SkeletonList: React.FC<{ count?: number; className?: string }> = ({
   count = 3,
   className = '',
 }) => (
-  <div className={`space-y-4 ${className}`}>
+  <div className={cn('space-y-4', className)}>
     {Array.from({ length: count }).map((_, i) => (
       <SkeletonCard key={i} />
     ))}

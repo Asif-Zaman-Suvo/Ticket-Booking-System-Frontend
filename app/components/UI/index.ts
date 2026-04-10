@@ -10,7 +10,7 @@ export type { CardProps, CardHeaderProps, CardBodyProps, CardFooterProps } from 
 export { Modal, ModalFooter } from './Modal';
 export type { ModalProps, ModalFooterProps } from './Modal';
 
-export { Toast } from './Toast';
+export { Toast, ToastProvider, toast } from './Toast';
 
 export {
   Skeleton,

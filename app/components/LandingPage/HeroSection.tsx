@@ -5,6 +5,8 @@ import { ApiResponse, District } from "@/types/api.types";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Search } from "lucide-react";
 
 export default function HeroSection() {
   const [searchData, setSearchData] = useState({
@@ -246,25 +248,13 @@ export default function HeroSection() {
 
               {/* Search Button */}
               <div className="pt-4">
-                <button
+                <Button
                   type="submit"
-                  className="w-full btn btn-primary py-5 text-xl font-extrabold pulse-glow hover:shadow-strong transition-all duration-300 hover:scale-[1.01] bg-gradient-to-r from-[var(--primary-600)] to-[var(--primary-700)] hover:from-[var(--primary-700)] hover:to-[var(--primary-800)]"
+                  className="w-full py-5 text-xl font-extrabold pulse-glow hover:shadow-strong transition-all duration-300 hover:scale-[1.01] bg-gradient-to-r from-[var(--primary-600)] to-[var(--primary-700)] hover:from-[var(--primary-700)] hover:to-[var(--primary-800)] h-auto"
                 >
-                  <svg
-                    className="inline w-6 h-6 mr-2"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                    />
-                  </svg>
+                  <Search className="w-6 h-6 mr-2" />
                   Search Buses
-                </button>
+                </Button>
               </div>
             </form>
 

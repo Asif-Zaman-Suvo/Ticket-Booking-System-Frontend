@@ -1,4 +1,8 @@
+'use client';
+
 import React from 'react';
+import { Button as ShadcnButton } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger';
@@ -8,6 +12,22 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
 }
+
+// Map old variant names to shadcn variant names
+const variantMap: Record<string, 'default' | 'secondary' | 'outline' | 'ghost' | 'destructive'> = {
+  primary: 'default',
+  secondary: 'secondary',
+  outline: 'outline',
+  ghost: 'ghost',
+  danger: 'destructive',
+};
+
+// Map old size names to shadcn size names
+const sizeMap: Record<string, 'sm' | 'default' | 'lg'> = {
+  sm: 'sm',
+  md: 'default',
+  lg: 'lg',
+};
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
@@ -25,34 +45,20 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     },
     ref
   ) => {
-    const baseStyles = 'inline-flex items-center justify-center font-semibold rounded-xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed';
-
-    const variantStyles = {
-      primary:
-        'bg-[var(--primary-600)] hover:bg-[var(--primary-700)] text-white shadow-md hover:shadow-lg focus:ring-[var(--primary-500)]',
-      secondary:
-        'bg-gray-600 hover:bg-gray-700 text-white shadow-md hover:shadow-lg focus:ring-gray-500',
-      outline:
-        'border-2 border-[var(--primary-600)] text-[var(--primary-600)] hover:bg-[var(--primary-50)] focus:ring-[var(--primary-500)]',
-      ghost:
-        'text-gray-700 hover:bg-gray-100 focus:ring-gray-500',
-      danger:
-        'bg-red-500 hover:bg-red-600 text-white shadow-md hover:shadow-lg focus:ring-red-500',
-    };
-
-    const sizeStyles = {
-      sm: 'px-3 py-1.5 text-sm',
-      md: 'px-6 py-2.5 text-base',
-      lg: 'px-8 py-3 text-lg',
-    };
-
-    const widthStyle = fullWidth ? 'w-full' : '';
-
     return (
-      <button
+      <ShadcnButton
         ref={ref}
+        variant={variantMap[variant] || 'default'}
+        size={sizeMap[size] || 'default'}
         disabled={disabled || loading}
-        className={`${baseStyles} ${variantStyles[variant]} ${sizeStyles[size]} ${widthStyle} ${className}`}
+        className={cn(
+          'font-semibold rounded-xl transition-all duration-300',
+          fullWidth && 'w-full',
+          size === 'sm' && 'px-3 py-1.5 text-sm',
+          size === 'md' && 'px-6 py-2.5 text-base',
+          size === 'lg' && 'px-8 py-3 text-lg',
+          className
+        )}
         {...props}
       >
         {loading && (
@@ -80,7 +86,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         {!loading && leftIcon && <span className="mr-2">{leftIcon}</span>}
         {children}
         {!loading && rightIcon && <span className="ml-2">{rightIcon}</span>}
-      </button>
+      </ShadcnButton>
     );
   }
 );

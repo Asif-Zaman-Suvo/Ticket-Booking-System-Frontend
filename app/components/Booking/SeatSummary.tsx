@@ -4,7 +4,7 @@ import React from 'react';
 import { Seat as SeatType } from '@/types/booking.types';
 
 import { ArrowRight, Check, Armchair, XCircle, Sparkles } from 'lucide-react';
-import { Button } from '../UI';
+import { Button } from '@/components/ui/button';
 
 interface SeatSummaryProps {
   selectedSeats: SeatType[];
@@ -84,31 +84,29 @@ export const SeatSummary: React.FC<SeatSummaryProps> = ({
             {/* Total */}
             <div className="bg-gradient-to-r from-[var(--primary-50)] to-[var(--primary-100)] rounded-2xl p-4 mb-6 border border-[var(--primary-200)]">
               <div className="flex items-center justify-between">
-                <span className="text-gray-700 font-medium">Total Amount</span>
+                <span className="text-gray-700 text-sm font-medium">Total Amount</span>
                 <div className="flex items-center gap-2">
                   <Sparkles className="w-5 h-5 text-[var(--primary-600)]" />
-                  <span className="text-2xl font-bold text-[var(--primary-700)]">৳{totalPrice}</span>
+                  <span className="text-xl font-bold text-[var(--primary-700)]">৳{totalPrice}</span>
                 </div>
               </div>
             </div>
 
             {/* Actions */}
-            <div className="space-y-3">
+            <div className="flex flex-col gap-3">
               <Button
-                fullWidth
                 onClick={onContinue}
                 disabled={selectedSeats.length === 0}
-                className="py-4 text-base font-semibold shadow-lg shadow-[var(--primary-500)]/30 hover:shadow-xl hover:shadow-[var(--primary-500)]/40 transition-all duration-300"
+                className="w-full cursor-pointer py-4 h-auto text-sm font-semibold shadow-lg shadow-[var(--primary-500)]/30 hover:shadow-xl hover:shadow-[var(--primary-500)]/40 transition-all duration-300 bg-gradient-to-r from-[var(--primary-600)] to-[var(--primary-700)] hover:from-[var(--primary-700)] hover:to-[var(--primary-800)]"
               >
                 Continue to Passenger Details
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Button>
               <Button
                 variant="outline"
-                fullWidth
                 onClick={onClearSelection}
                 disabled={selectedSeats.length === 0}
-                className="py-3 text-sm font-medium hover:bg-red-50 hover:border-red-200 hover:text-red-600 transition-all duration-300"
+                className="cursor-pointer w-full py-3 h-auto text-sm font-medium hover:bg-red-50 hover:border-red-200 hover:text-red-600 transition-all duration-300"
               >
                 <XCircle className="w-4 h-4 mr-2" />
                 Clear Selection

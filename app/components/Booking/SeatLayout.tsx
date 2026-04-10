@@ -48,7 +48,7 @@ export const SeatLayout: React.FC<SeatLayoutProps> = ({
       </div>
 
       {/* Seats */}
-      <div className="space-y-4 relative z-10">
+      <div className="space-y-4 z-10">
         {sortedRows?.map((row, index) => (
           <div
             key={row}

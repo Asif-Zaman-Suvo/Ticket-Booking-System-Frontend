@@ -1,4 +1,13 @@
+'use client';
+
 import React from 'react';
+import {
+  Card as ShadcnCard,
+  CardHeader as ShadcnCardHeader,
+  CardContent as ShadcnCardContent,
+  CardFooter as ShadcnCardFooter,
+} from '@/components/ui/card';
+import { cn } from '@/lib/utils';
 
 export interface CardProps {
   children: React.ReactNode;
@@ -10,14 +19,14 @@ export interface CardProps {
 
 export const Card = React.forwardRef<HTMLDivElement, CardProps>(
   ({ children, className = '', hover = false, padding = 'md', shadow = 'sm', ...props }, ref) => {
-    const paddingStyles = {
+    const paddingStyles: Record<string, string> = {
       none: '',
       sm: 'p-4',
       md: 'p-6',
       lg: 'p-8',
     };
 
-    const shadowStyles = {
+    const shadowStyles: Record<string, string> = {
       none: '',
       sm: 'shadow-sm',
       md: 'shadow-md',
@@ -25,19 +34,19 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(
     };
 
     return (
-      <div
+      <ShadcnCard
         ref={ref}
-        className={`
-          bg-white rounded-2xl border border-gray-100
-          ${paddingStyles[padding]}
-          ${shadowStyles[shadow]}
-          ${hover ? 'hover:shadow-lg transition-shadow duration-300' : ''}
-          ${className}
-        `}
+        className={cn(
+          'rounded-2xl border border-border bg-card text-card-foreground',
+          paddingStyles[padding],
+          shadowStyles[shadow],
+          hover && 'hover:shadow-lg transition-shadow duration-300 cursor-pointer',
+          className
+        )}
         {...props}
       >
         {children}
-      </div>
+      </ShadcnCard>
     );
   }
 );
@@ -52,9 +61,9 @@ export interface CardHeaderProps {
 export const CardHeader = React.forwardRef<HTMLDivElement, CardHeaderProps>(
   ({ children, className = '', ...props }, ref) => {
     return (
-      <div ref={ref} className={`mb-4 ${className}`} {...props}>
+      <ShadcnCardHeader ref={ref} className={cn('mb-4', className)} {...props}>
         {children}
-      </div>
+      </ShadcnCardHeader>
     );
   }
 );
@@ -69,9 +78,9 @@ export interface CardBodyProps {
 export const CardBody = React.forwardRef<HTMLDivElement, CardBodyProps>(
   ({ children, className = '', ...props }, ref) => {
     return (
-      <div ref={ref} className={className} {...props}>
+      <ShadcnCardContent ref={ref} className={cn('', className)} {...props}>
         {children}
-      </div>
+      </ShadcnCardContent>
     );
   }
 );
@@ -86,9 +95,9 @@ export interface CardFooterProps {
 export const CardFooter = React.forwardRef<HTMLDivElement, CardFooterProps>(
   ({ children, className = '', ...props }, ref) => {
     return (
-      <div ref={ref} className={`mt-4 pt-4 border-t border-gray-100 ${className}`} {...props}>
+      <ShadcnCardFooter ref={ref} className={cn('mt-4 pt-4 border-t border-border', className)} {...props}>
         {children}
-      </div>
+      </ShadcnCardFooter>
     );
   }
 );

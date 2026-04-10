@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useSession, signOut } from '@/app/auth-client';
+import { Button } from '@/components/ui/button';
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -60,41 +61,46 @@ export default function Navbar() {
                   </div>
                   <span className="text-gray-700 font-medium text-sm">{session.user?.name || 'User'}</span>
                 </div>
-                <button 
+                <Button
+                  variant="outline"
                   onClick={async () => {
                     await signOut();
                     router.push('/login');
-                  }} 
-                  className="btn btn-outline px-6 py-2.5 hover:shadow-lg hover:shadow-[var(--primary-200)]/50 transition-all duration-300"
+                  }}
+                  className="px-6 py-2.5 hover:shadow-lg transition-all duration-300"
                 >
                   Logout
-                </button>
+                </Button>
               </div>
             ) : (
               <>
-                <button 
-                  onClick={() => router.push('/login')} 
-                  className="btn btn-outline px-6 py-2.5 hover:shadow-lg hover:shadow-[var(--primary-200)]/50 transition-all duration-300 relative overflow-hidden group"
+                {/* Login - outline, hover e neutral dark */}
+                <Button
+                  variant="outline"
+                  onClick={() => router.push('/login')}
+                  className="px-6 py-2.5 border border-gray-300 text-gray-700 hover:border-gray-800 hover:bg-gray-800 hover:text-white transition-colors duration-200"
                 >
-                  <span className="relative z-10">Login</span>
-                  <div className="absolute inset-0 bg-gradient-to-r from-[var(--primary-500)] to-[var(--primary-700)] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                </button>
-                <button 
-                  onClick={() => router.push('/register')} 
-                  className="btn btn-primary px-6 py-2.5 bg-gradient-to-r from-[var(--primary-600)] to-[var(--primary-700)] hover:from-[var(--primary-700)] hover:to-[var(--primary-800)] hover:shadow-lg hover:shadow-[var(--primary-400)]/50 transition-all duration-300 relative overflow-hidden group"
+                  Login
+                </Button>
+
+                {/* Register - solid primary, hover e accent/green */}
+                <Button
+                  onClick={() => router.push('/register')}
+                  className="px-6 py-2.5 bg-[var(--primary-600)] text-white hover:bg-[var(--accent-500)] transition-colors duration-200"
                 >
-                  <span className="relative z-10">Register</span>
-                  <div className="absolute inset-0 bg-gradient-to-r from-[var(--accent-500)] to-[var(--accent-600)] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                </button>
+                  Register
+                </Button>
               </>
             )}
           </div>
 
           {/* Mobile Menu Button */}
           <div className="md:hidden">
-            <button
+            <Button
+              variant="ghost"
+              size="icon"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="text-gray-700 hover:text-[var(--primary-600)] focus:outline-none p-2 rounded-lg hover:bg-[var(--primary-50)] transition-colors duration-300"
+              className="text-gray-700 hover:text-[var(--primary-600)] p-2 rounded-lg hover:bg-[var(--primary-50)] transition-colors duration-300"
               aria-label="Toggle menu"
             >
               <svg
@@ -114,7 +120,7 @@ export default function Navbar() {
                   </>
                 )}
               </svg>
-            </button>
+            </Button>
           </div>
         </div>
 
@@ -150,37 +156,39 @@ export default function Navbar() {
                       <p className="text-gray-500 text-sm">Welcome back!</p>
                     </div>
                   </div>
-                  <button 
+                  <Button
+                    variant="outline"
                     onClick={async () => {
                       await signOut();
                       router.push('/login');
                       setIsMobileMenuOpen(false);
-                    }} 
-                    className="btn btn-outline w-full"
+                    }}
+                    className="w-full"
                   >
                     Logout
-                  </button>
+                  </Button>
                 </div>
               ) : (
                 <div className="flex flex-col gap-3">
-                  <button 
+                  <Button
+                    variant="outline"
                     onClick={() => {
                       router.push('/login');
                       setIsMobileMenuOpen(false);
-                    }} 
-                    className="btn btn-outline w-full"
+                    }}
+                    className="w-full"
                   >
                     Login
-                  </button>
-                  <button 
+                  </Button>
+                  <Button
                     onClick={() => {
                       router.push('/register');
                       setIsMobileMenuOpen(false);
-                    }} 
-                    className="btn btn-primary w-full bg-gradient-to-r from-[var(--primary-600)] to-[var(--primary-700)]"
+                    }}
+                    className="w-full bg-gradient-to-r from-[var(--primary-600)] to-[var(--primary-700)]"
                   >
                     Register
-                  </button>
+                  </Button>
                 </div>
               )}
             </div>

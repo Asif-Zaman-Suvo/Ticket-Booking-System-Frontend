@@ -1,3 +1,5 @@
+import { Button } from '@/components/ui/button';
+
 export default function FeaturedRoutes() {
   const routes = [
     {
@@ -120,9 +122,9 @@ export default function FeaturedRoutes() {
                     </p>
                     <p className="text-xs text-gray-500">per person</p>
                   </div>
-                  <button className={`px-4 py-2 rounded-lg bg-gradient-to-r ${route.gradient} text-white font-semibold text-sm opacity-0 group-hover:opacity-100 transform translate-x-4 group-hover:translate-x-0 transition-all duration-300 hover:shadow-lg`}>
+                  <Button className={`px-4 py-2 rounded-lg bg-gradient-to-r ${route.gradient} text-white font-semibold text-sm opacity-0 group-hover:opacity-100 transform translate-x-4 group-hover:translate-x-0 transition-all duration-300 hover:shadow-lg h-auto border-0`}>
                     Book Now
-                  </button>
+                  </Button>
                 </div>
               </div>
             </div>
@@ -131,10 +133,10 @@ export default function FeaturedRoutes() {
 
         {/* View All Routes Button */}
         <div className="text-center mt-12">
-          <button className="btn btn-primary px-8 py-4 bg-gradient-to-r from-[var(--primary-600)] to-[var(--primary-700)] hover:from-[var(--primary-700)] hover:to-[var(--primary-800)] hover:shadow-lg hover:shadow-[var(--primary-400)]/50 transition-all duration-300 relative overflow-hidden group">
+          <Button className="px-8 py-4 bg-gradient-to-r from-[var(--primary-600)] to-[var(--primary-700)] hover:from-[var(--primary-700)] hover:to-[var(--primary-800)] hover:shadow-lg transition-all duration-300 relative overflow-hidden group h-auto text-base">
             <span className="relative z-10">View All Routes</span>
             <div className="absolute inset-0 bg-gradient-to-r from-[var(--accent-500)] to-[var(--accent-600)] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-          </button>
+          </Button>
         </div>
       </div>
     </section>

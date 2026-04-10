@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { Button } from '@/components/ui/button';
 
 export default function Testimonials() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -112,23 +113,26 @@ export default function Testimonials() {
 
             {/* Navigation Buttons */}
             <div className="flex items-center justify-center gap-4 mt-8">
-              <button
+              <Button
                 onClick={prevTestimonial}
-                className="w-12 h-12 rounded-full bg-gradient-to-r from-[var(--primary-500)] to-[var(--primary-600)] text-white flex items-center justify-center hover:shadow-lg hover:shadow-[var(--primary-400)]/50 transition-all duration-300 hover:scale-110"
+                size="icon"
+                className="w-12 h-12 rounded-full bg-gradient-to-r from-[var(--primary-500)] to-[var(--primary-600)] text-white hover:shadow-lg hover:shadow-[var(--primary-400)]/50 transition-all duration-300 hover:scale-110 border-0"
                 aria-label="Previous testimonial"
               >
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                 </svg>
-              </button>
+              </Button>
               
               {/* Dots */}
               <div className="flex items-center gap-2">
                 {testimonials.map((_, index) => (
-                  <button
+                  <Button
                     key={index}
+                    variant="ghost"
+                    size="icon-xs"
                     onClick={() => setActiveIndex(index)}
-                    className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                    className={`w-3 h-3 rounded-full transition-all duration-300 p-0 min-w-3 border-0 ${
                       index === activeIndex
                         ? 'w-8 bg-gradient-to-r from-[var(--primary-500)] to-[var(--accent-500)]'
                         : 'bg-gray-300 hover:bg-gray-400'
@@ -138,15 +142,16 @@ export default function Testimonials() {
                 ))}
               </div>
               
-              <button
+              <Button
                 onClick={nextTestimonial}
-                className="w-12 h-12 rounded-full bg-gradient-to-r from-[var(--primary-500)] to-[var(--primary-600)] text-white flex items-center justify-center hover:shadow-lg hover:shadow-[var(--primary-400)]/50 transition-all duration-300 hover:scale-110"
+                size="icon"
+                className="w-12 h-12 rounded-full bg-gradient-to-r from-[var(--primary-500)] to-[var(--primary-600)] text-white hover:shadow-lg hover:shadow-[var(--primary-400)]/50 transition-all duration-300 hover:scale-110 border-0"
                 aria-label="Next testimonial"
               >
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
-              </button>
+              </Button>
             </div>
           </div>
         </div>
