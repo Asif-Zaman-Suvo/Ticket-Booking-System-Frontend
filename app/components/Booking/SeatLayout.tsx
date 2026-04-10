@@ -109,7 +109,7 @@ export const SeatLayout: React.FC<SeatLayoutProps> = ({
       </div>
 
       {/* Legend */}
-      <div className="mt-10 pt-8 border-t border-gray-100 relative z-10">
+      <div className="mt-10 pt-8 border-t border-gray-100 z-10">
         <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6">
           <LegendItem
             icon={<Circle className="w-3 h-3" />}
