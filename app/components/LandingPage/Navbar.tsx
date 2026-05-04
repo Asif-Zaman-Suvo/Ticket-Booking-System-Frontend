@@ -83,16 +83,14 @@ export default function Navbar() {
           <div className="hidden md:flex items-center gap-4">
             {session ? (
               <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <button className="flex items-center gap-2 px-3 py-2 bg-gradient-to-r from-[var(--primary-50)] to-[var(--primary-100)] rounded-full border border-[var(--primary-200)] hover:border-[var(--primary-400)] transition-all duration-200 group">
-                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[var(--primary-500)] to-[var(--primary-700)] flex items-center justify-center text-white font-bold text-sm shrink-0">
-                      {initials}
-                    </div>
-                    <span className="text-gray-700 font-medium text-sm max-w-28 truncate">
-                      {session.user?.name || "User"}
-                    </span>
-                    <ChevronDown className="w-3.5 h-3.5 text-gray-500 group-data-[state=open]:rotate-180 transition-transform duration-200" />
-                  </button>
+                <DropdownMenuTrigger className="flex items-center gap-2 px-3 py-2 bg-gradient-to-r from-[var(--primary-50)] to-[var(--primary-100)] rounded-full border border-[var(--primary-200)] hover:border-[var(--primary-400)] transition-all duration-200 cursor-pointer">
+                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[var(--primary-500)] to-[var(--primary-700)] flex items-center justify-center text-white font-bold text-sm shrink-0">
+                    {initials}
+                  </div>
+                  <span className="text-gray-700 font-medium text-sm max-w-28 truncate">
+                    {session.user?.name || "User"}
+                  </span>
+                  <ChevronDown className="w-3.5 h-3.5 text-gray-500 transition-transform duration-200" />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-52 shadow-strong">
                   <DropdownMenuLabel className="text-xs text-gray-500 font-normal">
