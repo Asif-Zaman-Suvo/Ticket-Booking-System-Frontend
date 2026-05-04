@@ -44,6 +44,7 @@ const Login = () => {
     try {
       const { data, error } = await signIn.social({
         provider: "google",
+        callbackURL: `${window.location.origin}/`,
       });
 
       if (error) {

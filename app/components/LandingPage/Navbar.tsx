@@ -9,7 +9,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
@@ -93,9 +92,9 @@ export default function Navbar() {
                   <ChevronDown className="w-3.5 h-3.5 text-gray-500 transition-transform duration-200" />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-52 shadow-strong">
-                  <DropdownMenuLabel className="text-xs text-gray-500 font-normal">
+                  <div className="px-2 py-1.5 text-xs text-gray-500 truncate">
                     {session.user?.email}
-                  </DropdownMenuLabel>
+                  </div>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem
                     onClick={() => router.push("/dashboard/profile")}
