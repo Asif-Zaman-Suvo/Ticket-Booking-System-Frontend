@@ -5,6 +5,7 @@ import { useEffect, useState, Suspense, useMemo } from "react";
 import { BusCard, BusDetails, FilterSidebar, SortDropdown, MobileFilterDrawer } from "@/app/components/BusSearch";
 import { Filter } from "lucide-react";
 import { useBookingStore } from "@/store/bookingStore";
+import { useFilterStore } from "@/store/filterStore";
 
 // Dummy data for bus routes
 const generateDummyBuses = (from: string, to: string, date: string): BusDetails[] => {
@@ -82,6 +83,7 @@ function SearchContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const { setSearchParams: setBookingSearchParams, setSelectedBus } = useBookingStore();
+  const { filters } = useFilterStore();
 
   const from = searchParams.get("from") || "Unknown Origin";
   const to = searchParams.get("to") || "Unknown Destination";
@@ -116,15 +118,78 @@ function SearchContent() {
     }
   };
 
-  // Filter and sort buses (this will be replaced with actual filter store logic)
   const filteredBuses = useMemo(() => {
     let result = [...allBuses];
 
-    // Apply filters here when filter store is integrated
-    // For now, just return all buses
+    // Price range
+    result = result.filter(
+      (b) => b.price >= filters.priceRange[0] && b.price <= filters.priceRange[1]
+    );
+
+    // Bus types (partial match: filter label contains one of the selected types)
+    if (filters.busTypes.length > 0) {
+      result = result.filter((b) =>
+        filters.busTypes.some((t) => b.type.toLowerCase().includes(t.toLowerCase()))
+      );
+    }
+
+    // Operators
+    if (filters.operators.length > 0) {
+      result = result.filter((b) =>
+        filters.operators.some((op) =>
+          b.operator.toLowerCase().includes(op.toLowerCase())
+        )
+      );
+    }
+
+    // Time slots
+    if (filters.timeSlots.length > 0) {
+      result = result.filter((b) => {
+        const hour = parseInt(b.departureTime.split(":")[0]);
+        const isPM = b.departureTime.toLowerCase().includes("pm");
+        const h24 = isPM && hour !== 12 ? hour + 12 : !isPM && hour === 12 ? 0 : hour;
+        return filters.timeSlots.some((slot) => {
+          if (slot === "morning") return h24 >= 5 && h24 < 12;
+          if (slot === "afternoon") return h24 >= 12 && h24 < 17;
+          if (slot === "evening") return h24 >= 17 && h24 < 21;
+          if (slot === "night") return h24 >= 21 || h24 < 5;
+          return true;
+        });
+      });
+    }
+
+    // Rating
+    if (filters.rating > 0) {
+      result = result.filter((b) => (b.rating ?? 0) >= filters.rating);
+    }
+
+    // Sorting
+    switch (filters.sortBy) {
+      case "price-asc":
+        result.sort((a, b) => a.price - b.price);
+        break;
+      case "price-desc":
+        result.sort((a, b) => b.price - a.price);
+        break;
+      case "rating-desc":
+        result.sort((a, b) => (b.rating ?? 0) - (a.rating ?? 0));
+        break;
+      case "time-asc":
+        result.sort((a, b) => a.departureTime.localeCompare(b.departureTime));
+        break;
+      case "time-desc":
+        result.sort((a, b) => b.departureTime.localeCompare(a.departureTime));
+        break;
+      case "duration-asc":
+        result.sort((a, b) => a.duration.localeCompare(b.duration));
+        break;
+      case "duration-desc":
+        result.sort((a, b) => b.duration.localeCompare(a.duration));
+        break;
+    }
 
     return result;
-  }, [allBuses]);
+  }, [allBuses, filters]);
 
   return (
     <div className="min-h-screen bg-gray-50 pb-12">

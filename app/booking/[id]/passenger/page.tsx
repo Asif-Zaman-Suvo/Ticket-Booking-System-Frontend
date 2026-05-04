@@ -113,7 +113,7 @@ export default function PassengerDetailsPage() {
       setContactInfo(contactInfo);
       setEmergencyContact(emergencyContact);
       setIsLoading(false);
-      router.push(`/booking/${Array.isArray(busId) ? busId[0] : busId}/confirmation`);
+      router.push(`/booking/${Array.isArray(busId) ? busId[0] : busId}/payment`);
     }, 1000);
   };
 
